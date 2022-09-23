@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mypilog.budget.ui.screen.Screen.Home
+import com.mypilog.budget.ui.screen.home.HomeScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("Home")
