@@ -82,7 +82,6 @@ fun BottomBar(
 
 @Preview(
     showBackground = true,
-    showSystemUi = true,
     widthDp = 400,
     name = "Phone-Portrait",
     device = Devices.PIXEL_3A
@@ -98,7 +97,6 @@ fun PreviewApp() {
 
 @Preview(
     showBackground = true,
-    showSystemUi = true,
     widthDp = 1080,
     heightDp = 360,
     name = "Phone-landscape",
@@ -115,7 +113,6 @@ fun PreviewAppHorizontal() {
 
 @Preview(
     showBackground = true,
-    showSystemUi = true,
     name = "Fold",
     device = Devices.FOLDABLE,
 )

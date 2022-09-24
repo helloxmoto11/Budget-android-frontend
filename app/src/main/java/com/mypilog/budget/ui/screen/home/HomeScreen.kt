@@ -1,9 +1,10 @@
 package com.mypilog.budget.ui.screen.home
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -17,41 +18,63 @@ fun HomeScreen() {
     HomeScreenUi()
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreenUi() {
-    var state by remember {
+    var tabRowIndex by remember {
         mutableStateOf(0)
     }
     val titles = listOf("Expenses", "Income", "Assets", "Liabilities")
 
-    Column(
+    ScrollableTabRow(selectedTabIndex = tabRowIndex) {
+        titles.forEachIndexed { index, title ->
+            Tab(
+                text = { Text(text = title)},
+                selected = tabRowIndex == index,
+                onClick = { tabRowIndex = index })
+        }
+    }
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .padding(start = 8.dp, top = 56.dp, end = 8.dp)
     ) {
 
+        item {
+            PieChart(
+                tempText = titles[tabRowIndex],
+                modifier = Modifier
+            )
+        }
 
-        ScrollableTabRow(selectedTabIndex = state) {
-            titles.forEachIndexed { index, title ->
-                Tab(
-                    text = { Text(text = title)},
-                    selected = state == index,
-                    onClick = { state = index })
+        stickyHeader {
+            Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)) {
+                Text(text = "09-25-2022")
+            }
+        }
+
+        items(5) {
+            ExpenseItem()
+            Spacer(modifier = Modifier.height(4.dp))
+        }
+
+        stickyHeader {
+            Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)) {
+                Text(text = "09-26-2022")
             }
         }
 
 
-        PieChart(
-            tempText = titles[state],
-            modifier = Modifier
-        )
+        items(15) {
+            ExpenseItem()
+            Spacer(modifier = Modifier.height(4.dp))
+        }
     }
 }
 
 @Preview(
-    showSystemUi = true,
     showBackground = true,
-    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
+    uiMode = Configuration.UI_MODE_NIGHT_YES
 )
 @Composable
 fun PreviewHomeScreenUi() {
