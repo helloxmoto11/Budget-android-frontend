@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Budget"
 include ':app'
+include ':domain'
+include ':repository'

@@ -54,7 +54,7 @@ fun HomeScreenUi() {
         }
 
         items(5) {
-            ExpenseItem()
+            BudgetItem()
             Spacer(modifier = Modifier.height(4.dp))
         }
 
@@ -66,7 +66,7 @@ fun HomeScreenUi() {
 
 
         items(15) {
-            ExpenseItem()
+            BudgetItem()
             Spacer(modifier = Modifier.height(4.dp))
         }
     }

@@ -36,8 +36,9 @@ fun PieChart(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ExpenseItem(
-
+fun BudgetItem(
+    name: String = "Starbucks",
+    amount: String = "$3.98"
 ) {
     Card(onClick = { /*TODO*/ }) {
         Column(
@@ -47,37 +48,9 @@ fun ExpenseItem(
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Starbucks")
+                Text(text = name)
                 Spacer(modifier = Modifier.weight(1f, true))
-                Text(text = "$4.35")
-                Spacer(modifier = Modifier.weight(1f, true))
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Filled.Edit, contentDescription = "Edit")
-                }
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Filled.Delete, contentDescription = "Delete")
-                }
-            }
-           
-        }
-    }
-
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun IncomeItem() {
-    Card(onClick = { /*TODO*/ }) {
-        Column(
-            Modifier
-                .fillMaxWidth()
-                .padding(8.dp)) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(text = "Mid Month Pay")
-                Spacer(modifier = Modifier.weight(1f, true))
-                Text(text = "$3200")
+                Text(text = amount)
                 Spacer(modifier = Modifier.weight(1f, true))
                 IconButton(onClick = { /*TODO*/ }) {
                     Icon(imageVector = Icons.Filled.Edit, contentDescription = "Edit")
@@ -97,10 +70,14 @@ fun IncomeItem() {
 fun PreviewExpenseItem() {
     BudgetTheme {
         Surface {
-            Column() {
-                ExpenseItem()
+            Column {
+                BudgetItem("Starbucks", "$3.95")
                 Spacer(modifier = Modifier.height(20.dp))
-                IncomeItem()
+                BudgetItem(name = "End Month Pay", amount = "$15,000")
+                Spacer(modifier = Modifier.height(20.dp))
+                BudgetItem(name = "VTSAX", amount = "$64,543")
+                Spacer(modifier = Modifier.height(20.dp))
+                BudgetItem(name = "Car Note", amount = "$4,100")
             }
 
         }
