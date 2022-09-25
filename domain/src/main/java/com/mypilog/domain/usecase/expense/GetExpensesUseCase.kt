@@ -12,10 +12,12 @@ class GetExpensesUseCase(
 ): UseCase<GetExpensesUseCase.Request, GetExpensesUseCase.Response>(configuration) {
 
 
-    override fun process(request: Request): Flow<Response> =
-        expenseRepository.getExpenses()
-            .map { Response(it) }
-
-    class Request() : UseCase.Request
+    override fun process(request: Request): Flow<Response> {
+        return expenseRepository.getExpenses()
+            .map {
+                Response(it)
+            }
+    }
+    object Request : UseCase.Request
     data class Response(val expenses: List<Expense>): UseCase.Response
 }

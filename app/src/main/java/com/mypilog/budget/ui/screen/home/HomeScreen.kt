@@ -5,22 +5,30 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.mypilog.budget.ui.theme.BudgetTheme
+import com.mypilog.domain.entity.Expense
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    homeScreenViewModel: HomeScreenViewModel  = hiltViewModel()
+) {
 
-    HomeScreenUi()
+    val expenses = homeScreenViewModel.homeScreenState.expenses
+    HomeScreenUi(expenses)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreenUi() {
+fun HomeScreenUi(
+    expenses: List<Expense> = emptyList()
+) {
     var tabRowIndex by remember {
         mutableStateOf(0)
     }
@@ -48,18 +56,22 @@ fun HomeScreenUi() {
         }
 
         stickyHeader {
-            Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.background)) {
                 Text(text = "09-25-2022")
             }
         }
 
-        items(5) {
-            BudgetItem()
+        items(expenses) {
+            BudgetItem(name = it.name, amount = it.cost.toString())
             Spacer(modifier = Modifier.height(4.dp))
         }
 
         stickyHeader {
-            Row(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colors.background)) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colors.background)) {
                 Text(text = "09-26-2022")
             }
         }
