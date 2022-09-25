@@ -43,7 +43,7 @@ class HomeScreenViewModel @Inject constructor(
                             homeScreenState.copy(isLoading = true)
                         }
                         is UiState.Error -> {
-                            Log.d(TAG, "error: ")
+                            Log.d(TAG, "error: ${it.errorMessage}")
                             homeScreenState.copy(errorMsg = it.errorMessage)
                         }
                         is UiState.Success -> {

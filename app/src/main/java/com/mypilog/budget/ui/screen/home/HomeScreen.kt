@@ -20,14 +20,14 @@ fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel  = hiltViewModel()
 ) {
 
-    val expenses = homeScreenViewModel.homeScreenState.expenses
+    val expenses = homeScreenViewModel.homeScreenState
     HomeScreenUi(expenses)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreenUi(
-    expenses: List<Expense> = emptyList()
+    screenState: HomeScreenState = HomeScreenState(),
 ) {
     var tabRowIndex by remember {
         mutableStateOf(0)
@@ -63,7 +63,7 @@ fun HomeScreenUi(
             }
         }
 
-        items(expenses) {
+        items(screenState.expenses) {
             BudgetItem(name = it.name, amount = it.cost.toString())
             Spacer(modifier = Modifier.height(4.dp))
         }

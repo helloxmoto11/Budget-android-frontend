@@ -53,4 +53,19 @@ dependencies {
     testImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
     testImplementation "androidx.test.ext:truth:1.5.0-alpha07"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+    //retrofit and moshi
+    // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+
+    // Moshi
+    implementation 'com.squareup.moshi:moshi-kotlin:1.13.0'
+
+    //okhttp
+    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
+
+    // define any required OkHttp artifacts without version
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
 }
