@@ -14,6 +14,7 @@ sealed class Screen(val route: String) {
 @Composable
 fun NavComponent(
     navController: NavHostController,
+    onError: (String) -> Unit
 ) {
 
     NavHost(
@@ -21,7 +22,9 @@ fun NavComponent(
         startDestination = Home.route) {
 
             composable(Home.route) {
-                HomeScreen()
+                HomeScreen(
+                    onError = onError
+                )
             }
 
         }

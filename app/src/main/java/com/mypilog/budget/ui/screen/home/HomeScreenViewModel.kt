@@ -10,6 +10,7 @@ import com.mypilog.budget.state.UiState
 import com.mypilog.domain.usecase.expense.GetExpensesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -24,7 +25,7 @@ class HomeScreenViewModel @Inject constructor(
         private const val TAG = "HomeScreenViewModel"
     }
 
-    var homeScreenState by mutableStateOf(HomeScreenState())
+    var homeScreenState by mutableStateOf(HomeScreenState(uiState = UiState.Loading))
         private set
 
 
@@ -38,20 +39,22 @@ class HomeScreenViewModel @Inject constructor(
                 }
                 .collect {
                     homeScreenState = when (it) {
+                        //show loading progress
                         is UiState.Loading -> {
-                            Log.d(TAG, "loading: ")
-                            homeScreenState.copy(isLoading = true)
+                            homeScreenState.copy(uiState = it)
                         }
                         is UiState.Error -> {
-                            Log.d(TAG, "error: ${it.errorMessage}")
-                            homeScreenState.copy(errorMsg = it.errorMessage)
+                            //show snackbar when error thrown
+                            Log.d(TAG, "UiStateError: ${it.errorMessage}")
+                            homeScreenState.copy(uiState = it)
                         }
                         is UiState.Success -> {
-                            Log.d(TAG, "success: ")
-                            homeScreenState.copy(expenses = it.data.expenses)
+                            Log.d(TAG, "success: ${it.data.expenses}")
+                            homeScreenState.copy(uiState = it)
                         }
                     }
                 }
+
         }
     }
 

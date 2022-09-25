@@ -1,5 +1,6 @@
 package com.mypilog.budget.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -10,12 +11,16 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.mypilog.budget.ui.AppNavRail
+import kotlinx.coroutines.launch
+
+private const val TAG = "AppScaffold"
 
 @Composable
 fun AppScaffold(
@@ -26,12 +31,16 @@ fun AppScaffold(
 
     val scaffoldState = rememberScaffoldState()
 
+    val scope = rememberCoroutineScope()
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { if (!shouldShowAppBar) TopBar() },
         bottomBar = { if (!shouldShowNavRail) BottomBar() },
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = {
+
+            }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Fab Icon")
             }
         },
@@ -48,7 +57,14 @@ fun AppScaffold(
                 )
             }
 
-            NavComponent(navController = navController)
+            NavComponent(
+                navController = navController,
+                onError = {
+                    scope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(it)
+                    }
+                }
+            )
         }
 
     }

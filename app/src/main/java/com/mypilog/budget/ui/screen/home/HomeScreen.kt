@@ -12,23 +12,35 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.mypilog.budget.state.UiState
+import com.mypilog.budget.ui.screen.CommonScreen
 import com.mypilog.budget.ui.theme.BudgetTheme
 import com.mypilog.domain.entity.Expense
 
 @Composable
 fun HomeScreen(
-    homeScreenViewModel: HomeScreenViewModel  = hiltViewModel()
+    homeScreenViewModel: HomeScreenViewModel  = hiltViewModel(),
+    onError: (String) -> Unit
 ) {
 
-    val expenses = homeScreenViewModel.homeScreenState
-    HomeScreenUi(expenses)
+    val homeScreenState = homeScreenViewModel.homeScreenState
+    CommonScreen(
+        uiState = homeScreenState.uiState,
+        onError = onError
+    ) {
+        HomeScreenUi(
+            it.expenses
+        )
+    }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreenUi(
-    screenState: HomeScreenState = HomeScreenState(),
+    expenses: List<Expense>,
 ) {
+
+
     var tabRowIndex by remember {
         mutableStateOf(0)
     }
@@ -63,7 +75,7 @@ fun HomeScreenUi(
             }
         }
 
-        items(screenState.expenses) {
+        items(expenses) {
             BudgetItem(name = it.name, amount = it.cost.toString())
             Spacer(modifier = Modifier.height(4.dp))
         }
@@ -92,7 +104,7 @@ fun HomeScreenUi(
 fun PreviewHomeScreenUi() {
     BudgetTheme {
         Surface {
-            HomeScreenUi()
+            HomeScreenUi(emptyList())
         }
     }
 }

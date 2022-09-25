@@ -4,6 +4,7 @@ import android.util.Log
 import com.mypilog.data_remote.network.expense.ExpenseApiModel
 import com.mypilog.data_remote.network.expense.ExpenseService
 import com.mypilog.domain.entity.Expense
+import com.mypilog.domain.entity.UseCaseException
 import com.mypilog.repository.datasource.remote.RemoteExpenseDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -22,7 +23,7 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
             convert(expenseApiModel)
         }
     }.catch {
-        Log.d("doom", "getExpenses: ${it.message}")
+        throw UseCaseException.ExpenseException(it)
     }
 
 //        Log.d("Expenses", "getExpenses: ")
