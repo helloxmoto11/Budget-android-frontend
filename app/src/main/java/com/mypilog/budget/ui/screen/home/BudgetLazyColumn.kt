@@ -16,7 +16,7 @@ import com.mypilog.domain.entity.*
 @Composable
 fun ExpenseLazyColumn(
     modifier: Modifier = Modifier,
-    expenses: List<Expense>,
+    expenses: Map<String, List<Expense>>,
     type: BudgetType
 ) {
     LazyColumn(
@@ -32,33 +32,25 @@ fun ExpenseLazyColumn(
             )
         }
         stickyHeader {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Text(text = "09-25-2022")
+
+        }
+
+        expenses.forEach { (date, expenses) ->
+            stickyHeader {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colors.background)
+                ) {
+                    Text(text = date)
+                }
+            }
+            items(expenses) {
+                BudgetItem(name = it.name, amount = it.cost.toString())
+                Spacer(modifier = Modifier.height(4.dp))
             }
         }
 
-        items(expenses) {
-            BudgetItem(name = it.name, amount = it.cost.toString())
-            Spacer(modifier = Modifier.height(4.dp))
-        }
-
-        stickyHeader {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Text(text = "09-26-2022")
-            }
-        }
-        items(15) {
-            BudgetItem()
-            Spacer(modifier = Modifier.height(4.dp))
-        }
     }
 }
 
@@ -66,7 +58,7 @@ fun ExpenseLazyColumn(
 @Composable
 fun IncomeLazyColumn(
     modifier: Modifier = Modifier,
-    income: List<Income>,
+    income: Map<String, List<Income>>,
     type: BudgetType
 ) {
 
@@ -82,33 +74,22 @@ fun IncomeLazyColumn(
                 modifier = Modifier
             )
         }
-        stickyHeader {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Text(text = "09-25-2022")
-            }
-        }
 
-        items(income) {
-            BudgetItem(name = it.name, amount = it.amount.toString())
-            Spacer(modifier = Modifier.height(4.dp))
-        }
-
-        stickyHeader {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Text(text = "09-26-2022")
+        income.forEach { (date, incomeList) ->
+            stickyHeader {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colors.background)
+                ) {
+                    Text(text = date)
+                }
             }
-        }
-        items(15) {
-            BudgetItem()
-            Spacer(modifier = Modifier.height(4.dp))
+
+            items(incomeList) {
+                BudgetItem(name = it.name, amount = it.amount.toString())
+                Spacer(modifier = Modifier.height(4.dp))
+            }
         }
     }
 }
@@ -117,7 +98,7 @@ fun IncomeLazyColumn(
 @Composable
 fun AssetLazyColumn(
     modifier: Modifier = Modifier,
-    assets: List<Asset>,
+    assets: Map<String, List<Asset>>,
     type: BudgetType
 ) {
 
@@ -133,33 +114,22 @@ fun AssetLazyColumn(
                 modifier = Modifier
             )
         }
-        stickyHeader {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Text(text = "09-25-2022")
-            }
-        }
 
-        items(assets) {
-            BudgetItem(name = it.name, amount = it.value.toString())
-            Spacer(modifier = Modifier.height(4.dp))
-        }
-
-        stickyHeader {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Text(text = "09-26-2022")
+        assets.forEach { (type, assets) ->
+            stickyHeader {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colors.background)
+                ) {
+                    Text(text = type)
+                }
             }
-        }
-        items(15) {
-            BudgetItem()
-            Spacer(modifier = Modifier.height(4.dp))
+
+            items(assets) {
+                BudgetItem(name = it.name, amount = it.value.toString())
+                Spacer(modifier = Modifier.height(4.dp))
+            }
         }
     }
 }
@@ -168,7 +138,7 @@ fun AssetLazyColumn(
 @Composable
 fun LiabilitiesLazyColumn(
     modifier: Modifier = Modifier,
-    liabilities: List<Liability>,
+    liabilities: Map<String, List<Liability>>,
     type: BudgetType
 ) {
 
@@ -184,33 +154,24 @@ fun LiabilitiesLazyColumn(
                 modifier = Modifier
             )
         }
-        stickyHeader {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Text(text = "09-25-2022")
+
+
+        liabilities.forEach { (type, liabilityList) ->
+            stickyHeader {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colors.background)
+                ) {
+                    Text(text = type)
+                }
+            }
+
+            items(liabilityList) {
+                BudgetItem(name = it.name, amount = it.balance.toString())
+                Spacer(modifier = Modifier.height(4.dp))
             }
         }
 
-        items(liabilities) {
-            BudgetItem(name = it.name, amount = it.balance.toString())
-            Spacer(modifier = Modifier.height(4.dp))
-        }
-
-        stickyHeader {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colors.background)
-            ) {
-                Text(text = "09-26-2022")
-            }
-        }
-        items(15) {
-            BudgetItem()
-            Spacer(modifier = Modifier.height(4.dp))
-        }
     }
 }

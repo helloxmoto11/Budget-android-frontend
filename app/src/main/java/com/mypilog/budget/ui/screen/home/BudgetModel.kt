@@ -3,15 +3,15 @@ package com.mypilog.budget.ui.screen.home
 import com.mypilog.domain.entity.*
 
 data class BudgetModel(
-    val expenses: List<Expense>,
-    val income: List<Income>,
-    val assets: List<Asset>,
-    val liabilities: List<Liability>
+    val expenses: Map<String, List<Expense>>,
+    val income: Map<String,List<Income>>,
+    val assets: Map<String,List<Asset>>,
+    val liabilities: Map<String,List<Liability>>
 )
 
 val fakeBudgetModel = BudgetModel(
-    expenses = fakeExpenses,
-    income = fakeIncome,
-    assets = fakeListOfAssets,
-    liabilities = fakeLiabilities
+    expenses = mapOf(Pair("2022-09-23", fakeExpenses)),
+    income = mapOf(Pair("2022-09-23", fakeIncome)),
+    assets = mapOf(Pair("2022-09-23", fakeListOfAssets)),
+    liabilities = mapOf(Pair("2022-09-23", fakeLiabilities))
 )

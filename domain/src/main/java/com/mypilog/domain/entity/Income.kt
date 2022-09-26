@@ -9,8 +9,8 @@ data class Income(
     val category: String,
     val amount: Double,
     val uid: Long,
-    val date: LocalDate,
-    val timeStamp: LocalDateTime = LocalDateTime.now()
+    val date: String,
+    val timeStamp: String
 )
 
 val fakeIncome = listOf(
@@ -20,7 +20,8 @@ val fakeIncome = listOf(
         category = "Pay",
         amount = 28000.00,
         uid = 56L,
-        date = LocalDate.now()
+        date = LocalDate.now().toString(),
+        timeStamp = LocalDateTime.now().toString()
     ),
     Income(
         id = 2,
@@ -28,6 +29,7 @@ val fakeIncome = listOf(
         category = "Pay",
         amount = 5500.00,
         uid = 56L,
-        date = LocalDate.now()
+        date = LocalDate.now().toString(),
+        timeStamp = LocalDateTime.now().toString()
     )
 )
