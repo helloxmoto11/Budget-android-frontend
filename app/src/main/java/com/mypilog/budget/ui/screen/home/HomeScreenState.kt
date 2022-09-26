@@ -5,6 +5,6 @@ import com.mypilog.domain.entity.Expense
 
 data class HomeScreenState(
     val errorMsg: String? = null,
-    val uiState: UiState<ExpenseModel>,
+    val uiState: UiState<BudgetModel>,
     val expenses: List<Expense> = emptyList()
 )

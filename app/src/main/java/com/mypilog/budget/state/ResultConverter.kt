@@ -22,5 +22,5 @@ abstract class ResultConverter<T: Any, R: Any> {
         }
     }
 
-    abstract fun convertSuccess(data: T): R
+    abstract fun convertSuccess(response: T): R
 }

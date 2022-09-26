@@ -27,9 +27,9 @@ fun HomeScreen(
     CommonScreen(
         uiState = homeScreenState.uiState,
         onError = onError
-    ) {
+    ) { budgetModel ->
         HomeScreenUi(
-            it.expenses
+            budgetModel
         )
     }
 }
@@ -37,7 +37,7 @@ fun HomeScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreenUi(
-    expenses: List<Expense>,
+    budgetModel: BudgetModel
 ) {
 
 
@@ -75,7 +75,7 @@ fun HomeScreenUi(
             }
         }
 
-        items(expenses) {
+        items(budgetModel.expenses) {
             BudgetItem(name = it.name, amount = it.cost.toString())
             Spacer(modifier = Modifier.height(4.dp))
         }
@@ -104,7 +104,7 @@ fun HomeScreenUi(
 fun PreviewHomeScreenUi() {
     BudgetTheme {
         Surface {
-            HomeScreenUi(emptyList())
+            HomeScreenUi(BudgetModel(emptyList(), emptyList(), emptyList(), emptyList()))
         }
     }
 }

@@ -26,31 +26,6 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
         throw UseCaseException.ExpenseException(it)
     }
 
-//        Log.d("Expenses", "getExpenses: ")
-//        val list = listOf(
-//            Expense(
-//                category = "Home",
-//                date = LocalDate.now(),
-//                uid = 1L,
-//                name = "Rent",
-//                cost = 1400.0
-//            ),
-//            Expense(
-//                category = "Auto",
-//                date = LocalDate.now(),
-//                uid = 1L,
-//                name = "Car Payment",
-//                cost = 500.0
-//            ),
-//            Expense(
-//                category = "Food",
-//                date = LocalDate.now(),
-//                uid = 1L,
-//                name = "Chipotle",
-//                cost = 1400.0
-//            ),
-//        )
-//        emit(list)
 
 
     override suspend fun addExpense(expense: Expense) {

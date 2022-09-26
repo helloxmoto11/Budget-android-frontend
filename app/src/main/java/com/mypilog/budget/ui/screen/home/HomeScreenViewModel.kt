@@ -7,10 +7,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mypilog.budget.state.UiState
+import com.mypilog.domain.usecase.budget.GetBudgetUseCase
 import com.mypilog.domain.usecase.expense.GetExpensesUseCase
+import com.mypilog.domain.usecase.income.GetAllIncomeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -19,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
     private val converter: ExpenseResultConverter,
-    private val getExpensesUseCase: GetExpensesUseCase
+    private val getBudgetUseCase: GetBudgetUseCase
 ) : ViewModel() {
     companion object {
         private const val TAG = "HomeScreenViewModel"
@@ -33,7 +36,9 @@ class HomeScreenViewModel @Inject constructor(
         Log.d(TAG, "test: init")
         viewModelScope.launch {
             Log.d(TAG, "test: Launch")
-            getExpensesUseCase.invoke(GetExpensesUseCase.Request)
+
+
+            getBudgetUseCase.invoke(GetBudgetUseCase.Request)
                 .map {
                     converter.convert(it)
                 }
