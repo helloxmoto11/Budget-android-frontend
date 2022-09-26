@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 data class Income(
     val id: Long = 0,
     val name: String,
-    val category: String,
+    val type: String,
     val amount: Double,
     val uid: Long,
     val date: String,
@@ -17,7 +17,7 @@ val fakeIncome = listOf(
     Income(
         id = 1,
         name = "End of month pay",
-        category = "Pay",
+        type = "Pay",
         amount = 28000.00,
         uid = 56L,
         date = LocalDate.now().toString(),
@@ -26,7 +26,7 @@ val fakeIncome = listOf(
     Income(
         id = 2,
         name = "Mid month pay",
-        category = "Pay",
+        type = "Pay",
         amount = 5500.00,
         uid = 56L,
         date = LocalDate.now().toString(),
