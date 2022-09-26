@@ -10,3 +10,9 @@ data class Liability(
     val uid: Long,
     val lastUpdated: LocalDateTime = LocalDateTime.now()
 )
+
+
+val fakeLiabilities = listOf(
+    Liability(id = 1, name = "Car", type = "Auto Loan", balance = 4000.00, uid = 56L),
+    Liability(id = 2, name = "House Payment", type = "Housing", balance = 350000.00, uid = 56L)
+)
