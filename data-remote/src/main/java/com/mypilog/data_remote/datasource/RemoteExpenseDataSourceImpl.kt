@@ -1,6 +1,5 @@
 package com.mypilog.data_remote.datasource
 
-import android.util.Log
 import com.mypilog.data_remote.network.expense.ExpenseApiModel
 import com.mypilog.data_remote.network.expense.ExpenseService
 import com.mypilog.domain.entity.Expense
@@ -25,8 +24,6 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
     }.catch {
         throw UseCaseException.ExpenseException(it)
     }
-
-
 
     override suspend fun addExpense(expense: Expense) {
         TODO("Not yet implemented")
