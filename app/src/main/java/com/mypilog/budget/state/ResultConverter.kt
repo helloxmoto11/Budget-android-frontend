@@ -1,20 +1,20 @@
 package com.mypilog.budget.state
 
-import android.util.Log
 import com.mypilog.domain.entity.Result
+import java.net.SocketTimeoutException
 
+private const val TAG = "ResultConverter"
 abstract class ResultConverter<T: Any, R: Any> {
 
-    init {
-        Log.d("convert", "abstract converter: created")
-    }
-
     fun convert(result: Result<T>): UiState<R> {
-        Log.d("convert", "convert called")
-
         return when (result) {
             is Result.Error -> {
-                UiState.Error(result.exception.localizedMessage.orEmpty())
+                val errorMessage = if (result.exception.cause is SocketTimeoutException) {
+                    "Connection Timed Out"
+                } else {
+                    result.exception.localizedMessage.orEmpty() + result.exception.javaClass.simpleName
+                }
+                UiState.Error(errorMessage)
             }
             is Result.Success -> {
                 UiState.Success(convertSuccess(result.data))

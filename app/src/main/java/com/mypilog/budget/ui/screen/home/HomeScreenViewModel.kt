@@ -8,20 +8,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mypilog.budget.state.UiState
 import com.mypilog.domain.usecase.budget.GetBudgetUseCase
-import com.mypilog.domain.usecase.expense.GetExpensesUseCase
-import com.mypilog.domain.usecase.income.GetAllIncomeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val converter: ExpenseResultConverter,
+    private val converter: BudgetResultConverter,
     private val getBudgetUseCase: GetBudgetUseCase
 ) : ViewModel() {
     companion object {
@@ -63,4 +57,8 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.d(TAG, "onCleared: ViewModelCleared")
+    }
 }

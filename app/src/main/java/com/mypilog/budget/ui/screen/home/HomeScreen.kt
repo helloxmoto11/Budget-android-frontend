@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.mypilog.budget.state.UiState
 import com.mypilog.budget.ui.screen.CommonScreen
 import com.mypilog.budget.ui.theme.BudgetTheme
 

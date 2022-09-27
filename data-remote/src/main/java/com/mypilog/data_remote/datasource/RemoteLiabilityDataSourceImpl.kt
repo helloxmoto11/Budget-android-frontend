@@ -23,8 +23,6 @@ class RemoteLiabilityDataSourceImpl @Inject constructor(
             convert(apiModel)
         }
     }.catch {
-        Log.d("DataSource", "getAllLiabilities: ${it.stackTrace}")
-
         throw UseCaseException.LiabilityException(it)
     }
 

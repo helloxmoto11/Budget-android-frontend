@@ -23,7 +23,6 @@ class RemoteIncomeDataSourceImpl @Inject constructor(
                 convert(it)
             }
     }.catch {
-        Log.d("DataSource", "getAllIncome: ${it.stackTrace}")
         throw UseCaseException.IncomeException(it)
     }
 

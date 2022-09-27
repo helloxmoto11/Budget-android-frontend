@@ -9,24 +9,16 @@ import com.mypilog.domain.entity.Liability
 import com.mypilog.domain.usecase.budget.GetBudgetUseCase
 import javax.inject.Inject
 
-private const val TAG = "ExpenseResultConverter"
-class ExpenseResultConverter @Inject constructor() : ResultConverter<GetBudgetUseCase.Response, BudgetModel>() {
-
-    init {
-        Log.d(TAG, "converter: created")
-
-    }
+private const val TAG = "BudgetResultConverter"
+class BudgetResultConverter @Inject constructor() : ResultConverter<GetBudgetUseCase.Response, BudgetModel>() {
 
     override fun convertSuccess(response: GetBudgetUseCase.Response): BudgetModel {
-        Log.d("convert", "convert:${response.budget}")
-
         return transformBudget(
             l1 = response.budget.expenses,
             l2 = response.budget.income,
             l3 = response.budget.assets,
             l4 = response.budget.liabilities
         )
-
     }
 
     private fun  transformBudget(
