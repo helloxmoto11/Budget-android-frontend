@@ -1,5 +1,6 @@
 package com.mypilog.data_remote.datasource
 
+import android.util.Log
 import com.mypilog.data_remote.network.asset.AssetApiModel
 import com.mypilog.data_remote.network.asset.AssetService
 import com.mypilog.domain.entity.Asset
@@ -21,6 +22,7 @@ class RemoteAssetDataSourceImpl @Inject constructor(
             convert(apiModel)
         }
     }.catch {
+        Log.d("DataSource", "getAllAssets: ${it.stackTrace}")
         throw AssetException(it)
     }
 

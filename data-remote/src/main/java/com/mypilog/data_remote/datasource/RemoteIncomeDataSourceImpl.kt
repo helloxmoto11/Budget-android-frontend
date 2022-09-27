@@ -1,5 +1,6 @@
 package com.mypilog.data_remote.datasource
 
+import android.util.Log
 import com.mypilog.data_remote.network.income.IncomeApiModel
 import com.mypilog.data_remote.network.income.IncomeService
 import com.mypilog.domain.entity.Income
@@ -23,6 +24,7 @@ class RemoteIncomeDataSourceImpl @Inject constructor(
                 convert(it)
             }
     }.catch {
+        Log.d("DataSource", "getAllIncome: ${it.stackTrace}")
         throw UseCaseException.IncomeException(it)
     }
 

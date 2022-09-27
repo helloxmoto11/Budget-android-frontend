@@ -1,10 +1,12 @@
 package com.mypilog.data_remote.datasource
 
+import android.util.Log
 import com.mypilog.data_remote.network.user.UserApiModel
 import com.mypilog.data_remote.network.user.UserService
 import com.mypilog.domain.entity.User
 import com.mypilog.repository.datasource.remote.RemoteUserDataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -19,6 +21,8 @@ class RemoteUserDataSourceImpl
         emit(userService.getUser(56L))
     }.map {
         convert(it)
+    }.catch {
+        Log.d("DataSource", "getUser: ${it.stackTrace}")
     }
 
     private fun convert(userApiModel: UserApiModel): User {

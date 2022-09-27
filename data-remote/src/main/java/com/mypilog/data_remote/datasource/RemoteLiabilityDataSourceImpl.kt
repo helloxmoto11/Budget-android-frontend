@@ -1,5 +1,6 @@
 package com.mypilog.data_remote.datasource
 
+import android.util.Log
 import com.mypilog.data_remote.network.liability.LiabilityApiModel
 import com.mypilog.data_remote.network.liability.LiabilityService
 import com.mypilog.domain.entity.Liability
@@ -21,7 +22,11 @@ class RemoteLiabilityDataSourceImpl @Inject constructor(
         it.map { apiModel ->
             convert(apiModel)
         }
-    }.catch { throw UseCaseException.LiabilityException(it) }
+    }.catch {
+        Log.d("DataSource", "getAllLiabilities: ${it.stackTrace}")
+
+        throw UseCaseException.LiabilityException(it)
+    }
 
     override fun getLiability(id: Long): Flow<Liability> {
         TODO("Not yet implemented")
