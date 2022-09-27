@@ -8,7 +8,7 @@ data class Asset(
     val type: String,
     val value: Double,
     val uid: Long,
-    val lastUpdated: LocalDateTime = LocalDateTime.now()
+    val lastUpdated: String
 )
 
 val fakeListOfAssets = listOf(
@@ -18,7 +18,7 @@ val fakeListOfAssets = listOf(
   type = "Retirement",
   value = 64444.34,
   uid = 56L,
-  lastUpdated = LocalDateTime.now()
+  lastUpdated = LocalDateTime.now().toString()
  ),
  Asset(
   id = 2,
@@ -26,6 +26,6 @@ val fakeListOfAssets = listOf(
   type = "Savings",
   value = 60000.11,
   uid = 56L,
-  lastUpdated = LocalDateTime.now()
+  lastUpdated = LocalDateTime.now().toString()
  ),
 )

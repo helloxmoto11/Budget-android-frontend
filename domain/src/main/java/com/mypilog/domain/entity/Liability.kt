@@ -8,7 +8,7 @@ data class Liability(
     val type: String,
     val balance: Double,
     val uid: Long,
-    val lastUpdated: LocalDateTime = LocalDateTime.now()
+    val lastUpdated: String = LocalDateTime.now().toString()
 )
 
 

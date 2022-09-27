@@ -6,5 +6,5 @@ import retrofit2.http.Query
 interface UserService {
 
     @GET("/user")
-    suspend fun getUser(@Query("uid") uid: Long): List<UserApiModel>
+    suspend fun getUser(@Query("uid") uid: Long): UserApiModel
 }
