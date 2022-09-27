@@ -5,7 +5,6 @@ import com.mypilog.data_remote.network.income.IncomeApiModel
 import com.mypilog.data_remote.network.income.IncomeService
 import com.mypilog.domain.entity.Income
 import com.mypilog.domain.entity.UseCaseException
-import com.mypilog.domain.entity.fakeIncome
 import com.mypilog.repository.datasource.remote.RemoteIncomeDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -17,7 +16,7 @@ class RemoteIncomeDataSourceImpl @Inject constructor(
     private val incomeService: IncomeService
 ) : RemoteIncomeDataSource {
     override fun getAllIncome(): Flow<List<Income>> = flow {
-        emit(incomeService.getAllIncome(56L))
+        emit(incomeService.getAllIncome(uid = 56L))
     }.map { incomeApiModelList ->
         incomeApiModelList
             .map {
@@ -28,12 +27,14 @@ class RemoteIncomeDataSourceImpl @Inject constructor(
         throw UseCaseException.IncomeException(it)
     }
 
-    override fun getIncome(id: Long): Flow<Income> {
-        TODO("Not yet implemented")
+    override fun getIncome(id: Long): Flow<Income> = flow {
+        emit(incomeService.getIncome(id = id, uid = 56L))
+    }.map {
+        convert(it)
     }
 
     override suspend fun saveIncome(income: Income) {
-        TODO("Not yet implemented")
+        incomeService.saveIncome(income.convertToApiModel())
     }
 
     private fun convert(apiModel: IncomeApiModel): Income {
@@ -45,6 +46,18 @@ class RemoteIncomeDataSourceImpl @Inject constructor(
             uid = apiModel.uid,
             date = apiModel.date,
             timeStamp = apiModel.timeStamp
+        )
+    }
+
+    private fun Income.convertToApiModel(): IncomeApiModel {
+        return IncomeApiModel(
+            id = id,
+            name = name,
+            type = type,
+            amount = amount,
+            uid = uid,
+            date = date,
+            timeStamp = timeStamp
         )
     }
 }

@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface RemoteUserDataSource {
 
     fun getUser(uid: Long): Flow<User>
+
+    suspend fun saveUser(user: User)
 }

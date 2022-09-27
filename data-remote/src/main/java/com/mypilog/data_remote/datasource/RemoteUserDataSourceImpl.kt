@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class RemoteUserDataSourceImpl
@@ -25,12 +26,28 @@ class RemoteUserDataSourceImpl
         Log.d("DataSource", "getUser: ${it.stackTrace}")
     }
 
+    override suspend fun saveUser(user: User) {
+        userService.saveUser(user.convertToApiModel())
+    }
+
     private fun convert(userApiModel: UserApiModel): User {
        return User(
             uid = userApiModel.uid,
             email = userApiModel.email,
             firstName = userApiModel.firstName,
             lastName = userApiModel.lastName
+        )
+    }
+
+    private fun User.convertToApiModel(): UserApiModel {
+        val timeStamp = LocalDateTime.now().toString()
+        return UserApiModel(
+            uid = uid,
+            email = email,
+            firstName = firstName,
+            lastName = lastName,
+            createdAt = timeStamp,
+            lastUpdated = timeStamp
         )
     }
 }

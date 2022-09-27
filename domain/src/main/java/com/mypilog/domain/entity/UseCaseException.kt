@@ -6,6 +6,7 @@ sealed class UseCaseException(cause: Throwable): Throwable(cause) {
     class AssetException(cause: Throwable): UseCaseException(cause)
     class LiabilityException(cause: Throwable): UseCaseException(cause)
     class UnknownException(cause: Throwable): UseCaseException(cause)
+    class UserException(cause: Throwable): UseCaseException(cause)
 
     companion object {
         fun createFromThrowable(throwable: Throwable): UseCaseException {

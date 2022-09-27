@@ -33,7 +33,7 @@ class RemoteLiabilityDataSourceImpl @Inject constructor(
     }
 
     override suspend fun saveLiability(liability: Liability) {
-        TODO("Not yet implemented")
+       liabilityService.saveLiability(liability.convertToApiModel())
     }
 
     private fun convert(apiModel: LiabilityApiModel): Liability {
@@ -45,5 +45,15 @@ class RemoteLiabilityDataSourceImpl @Inject constructor(
             uid = apiModel.uid,
             lastUpdated = apiModel.lastUpdated
         )
+    }
+
+    private fun Liability.convertToApiModel(): LiabilityApiModel {
+        return LiabilityApiModel(
+            id = id,
+            name = name,
+            type = type,
+            balance = balance,
+            uid = uid,
+            lastUpdated = lastUpdated)
     }
 }

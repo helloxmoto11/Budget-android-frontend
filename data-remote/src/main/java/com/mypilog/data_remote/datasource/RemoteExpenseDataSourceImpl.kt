@@ -16,7 +16,7 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
 ) : RemoteExpenseDataSource {
 
     override fun getExpenses(): Flow<List<Expense>> = flow {
-        emit(expenseService.getExpenses(56))
+        emit(expenseService.getAllExpenses(56))
     }.map { expenses ->
         expenses.map { expenseApiModel ->
             convert(expenseApiModel)
@@ -26,7 +26,7 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
     }
 
     override suspend fun addExpense(expense: Expense) {
-        TODO("Not yet implemented")
+        expenseService.saveExpense(expense.convertToApiModel())
     }
 
     private fun convert(expenseApiModel: ExpenseApiModel) =
@@ -39,4 +39,17 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
             date = expenseApiModel.date,
             timeStamp = expenseApiModel.timeStamp,
         )
+
+    private fun Expense.convertToApiModel() : ExpenseApiModel{
+        return ExpenseApiModel(
+            id = id,
+            name = name,
+            category = category,
+            cost = cost,
+            uid = uid,
+            date = date,
+            timeStamp = timeStamp,
+        )
+
+    }
 }
