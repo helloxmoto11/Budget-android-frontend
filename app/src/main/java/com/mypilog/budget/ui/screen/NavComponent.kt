@@ -14,7 +14,8 @@ sealed class Screen(val route: String) {
 @Composable
 fun NavComponent(
     navController: NavHostController,
-    onError: (String) -> Unit
+    onError: (String) -> Unit,
+    scrollableTabRow: Boolean
 ) {
 
     NavHost(
@@ -23,7 +24,8 @@ fun NavComponent(
 
             composable(Home.route) {
                 HomeScreen(
-                    onError = onError
+                    onError = onError,
+                    scrollableTabRow = scrollableTabRow
                 )
             }
 

@@ -1,26 +1,19 @@
 package com.mypilog.budget.ui.screen.home
 
 import android.content.res.Configuration
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
+import androidx.compose.material.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.mypilog.budget.state.UiState
 import com.mypilog.budget.ui.screen.CommonScreen
 import com.mypilog.budget.ui.theme.BudgetTheme
 
 @Composable
 fun HomeScreen(
     homeScreenViewModel: HomeScreenViewModel = hiltViewModel(),
-    onError: (String) -> Unit
+    onError: (String) -> Unit,
+    scrollableTabRow: Boolean
 ) {
-
     val homeScreenState = homeScreenViewModel.homeScreenState
 
     CommonScreen(
@@ -28,49 +21,38 @@ fun HomeScreen(
         onError = onError
     ) { budgetModel ->
         HomeScreenUi(
-            budgetModel
+            budgetModel = budgetModel,
+            selectedTab = homeScreenState.selectedTab,
+            onTabSelected = homeScreenViewModel::onTabSelected,
+            tabRowScrollable = scrollableTabRow
         )
     }
 }
 
 @Composable
 fun HomeScreenUi(
-    budgetModel: BudgetModel
+    budgetModel: BudgetModel,
+    selectedTab: BudgetType,
+    onTabSelected: (BudgetType) -> Unit,
+    tabRowScrollable: Boolean = true
 ) {
 
-    var tabRowIndex by remember {
-        mutableStateOf(0)
-    }
-    val titles = listOf(
-        BudgetType.Expenses,
-        BudgetType.Income,
-        BudgetType.Assets,
-        BudgetType.Liabilities
+    AppTabRow(
+        scrollable = tabRowScrollable,
+        selected = selectedTab,
+        onSelectedChange = onTabSelected
     )
 
-    var selected by remember {
-        mutableStateOf<BudgetType>(BudgetType.Expenses)
-    }
-
-    ScrollableTabRow(selectedTabIndex = tabRowIndex) {
-        titles.forEachIndexed { index, title ->
-            Tab(
-                text = { Text(text = title.name) },
-                selected = tabRowIndex == index,
-                onClick = {
-                    tabRowIndex = index
-                    selected = titles[index]
-                })
-        }
-    }
-
-    when (selected) {
-        BudgetType.Assets -> AssetLazyColumn(assets = budgetModel.assets, type = selected)
-        BudgetType.Expenses -> ExpenseLazyColumn(expenses = budgetModel.expenses, type = selected)
-        BudgetType.Income -> IncomeLazyColumn(income = budgetModel.income, type = selected)
+    when (selectedTab) {
+        BudgetType.Assets -> AssetLazyColumn(assets = budgetModel.assets, type = selectedTab)
+        BudgetType.Expenses -> ExpenseLazyColumn(
+            expenses = budgetModel.expenses,
+            type = selectedTab
+        )
+        BudgetType.Income -> IncomeLazyColumn(income = budgetModel.income, type = selectedTab)
         BudgetType.Liabilities -> LiabilitiesLazyColumn(
             liabilities = budgetModel.liabilities,
-            type = selected
+            type = selectedTab
         )
     }
 }
@@ -85,7 +67,11 @@ fun PreviewHomeScreenUi() {
 
     BudgetTheme {
         Surface {
-            HomeScreenUi(fakeBudgetModel)
+            HomeScreenUi(
+                budgetModel = fakeBudgetModel,
+                selectedTab = BudgetType.Expenses,
+                onTabSelected = {}
+            )
         }
     }
 }

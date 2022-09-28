@@ -9,7 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -60,6 +60,47 @@ fun BudgetItem(
                 }
             }
 
+        }
+    }
+}
+
+@Composable
+fun AppTabRow(
+    scrollable: Boolean,
+    selected: BudgetType,
+    onSelectedChange: (BudgetType) -> Unit
+) {
+
+    val titles = listOf(
+        BudgetType.Expenses,
+        BudgetType.Income,
+        BudgetType.Assets,
+        BudgetType.Liabilities
+    )
+
+    val tabRowIndex = titles.indexOf(selected)
+
+    if (scrollable) {
+        ScrollableTabRow(selectedTabIndex = tabRowIndex) {
+            titles.forEachIndexed { index, title ->
+                Tab(
+                    text = { Text(text = title.name) },
+                    selected = selected == title,
+                    onClick = {
+                        onSelectedChange(titles[index])
+                    })
+            }
+        }
+    } else {
+        TabRow(selectedTabIndex = tabRowIndex) {
+            titles.forEachIndexed { index, title ->
+                Tab(
+                    text = { Text(text = title.name) },
+                    selected = selected == title,
+                    onClick = {
+                        onSelectedChange(titles[index])
+                    })
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 package com.mypilog.budget.ui
+
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
@@ -21,7 +22,6 @@ fun AppNavRail(
         Icons.Filled.Home,
         Icons.Filled.Settings,
         Icons.Filled.StackedLineChart,
-        Icons.Filled.Add,
         Icons.Filled.Search
     )
     NavigationRail() {
@@ -33,13 +33,9 @@ fun AppNavRail(
                     icon = { Icon(imageVector = icons[i], contentDescription = item) },
                     label = { Text(text = item) },
                     selected = currentDestination?.destination?.route.let { it == item },
-                    onClick = { /*TODO*/ })
-
-
+                    onClick = { /*TODO*/ }
+                )
             }
         }
-
-
     }
-
 }

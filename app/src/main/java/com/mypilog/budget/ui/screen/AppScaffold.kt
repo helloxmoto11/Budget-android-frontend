@@ -52,7 +52,7 @@ fun AppScaffold(
             if (shouldShowNavRail) {
                 AppNavRail(
                     navController = navController,
-                    items = listOf("Home", "Settings", "Stats", "More", "Search")
+                    items = listOf("Home", "Stats", "Settings", "Search")
                 )
             }
 
@@ -62,7 +62,8 @@ fun AppScaffold(
                     scope.launch {
                         scaffoldState.snackbarHostState.showSnackbar(it)
                     }
-                }
+                },
+                scrollableTabRow = !shouldShowNavRail
             )
         }
 

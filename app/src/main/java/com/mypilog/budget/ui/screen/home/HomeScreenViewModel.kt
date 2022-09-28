@@ -57,6 +57,11 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
+    fun onTabSelected(selected: BudgetType) {
+        Log.d(TAG, "onTabSelected: $selected")
+        homeScreenState = homeScreenState.copy(selectedTab = selected)
+    }
+
     override fun onCleared() {
         super.onCleared()
         Log.d(TAG, "onCleared: ViewModelCleared")
