@@ -22,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val TAG = "MainActivity"
 
-    private lateinit var windowInfoTracker: WindowInfoTracker
 
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +46,7 @@ class MainActivity : ComponentActivity() {
                     AppScaffold(
                         navController = navController,
                         shouldShowNavRail = width == WindowWidthSizeClass.Medium || width == WindowWidthSizeClass.Expanded,
-                        shouldShowAppBar = height == WindowHeightSizeClass.Compact
+                        shouldShowTopAppBar = width != WindowWidthSizeClass.Expanded
                     )
                 }
             }

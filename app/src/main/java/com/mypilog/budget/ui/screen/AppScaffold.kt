@@ -1,6 +1,5 @@
 package com.mypilog.budget.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -26,7 +25,7 @@ private const val TAG = "AppScaffold"
 fun AppScaffold(
     navController: NavHostController,
     shouldShowNavRail: Boolean,
-    shouldShowAppBar: Boolean
+    shouldShowTopAppBar: Boolean
 ) {
 
     val scaffoldState = rememberScaffoldState()
@@ -35,7 +34,7 @@ fun AppScaffold(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { if (!shouldShowAppBar) TopBar() },
+        topBar = { if (shouldShowTopAppBar) TopBar() },
         bottomBar = { if (!shouldShowNavRail) BottomBar() },
         floatingActionButton = {
             FloatingActionButton(onClick = {
@@ -73,7 +72,7 @@ fun AppScaffold(
 @Composable
 fun TopBar() {
     TopAppBar(
-        title = { Text(text = "Title") }
+        title = { Text(text = "Budget") }
     )
 }
 
@@ -107,7 +106,7 @@ fun PreviewApp() {
     AppScaffold(
         navController = rememberNavController(),
         shouldShowNavRail = false,
-        shouldShowAppBar = true
+        shouldShowTopAppBar = true
     )
 }
 
@@ -123,7 +122,7 @@ fun PreviewAppHorizontal() {
     AppScaffold(
         navController = rememberNavController(),
         shouldShowNavRail = true,
-        shouldShowAppBar = false
+        shouldShowTopAppBar = false
     )
 }
 
@@ -137,6 +136,6 @@ fun PreviewFoldApp() {
     AppScaffold(
         navController = rememberNavController(),
         shouldShowNavRail = true,
-        shouldShowAppBar = true
+         shouldShowTopAppBar = true
     )
 }
