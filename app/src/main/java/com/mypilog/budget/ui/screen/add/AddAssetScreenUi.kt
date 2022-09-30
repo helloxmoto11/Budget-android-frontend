@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.mypilog.budget.ScreenType
 
 @Composable
-fun AddAssetScreenUi(screenState: AddScreenState) {
+fun AddAssetScreenUi(
+    screenType: ScreenType,
+    screenState: AddScreenState) {
     Column(
         Modifier
             .fillMaxSize()
