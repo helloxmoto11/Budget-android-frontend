@@ -1,19 +1,18 @@
 package com.mypilog.budget.ui.screen
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.mypilog.budget.ui.AppNavRail
@@ -37,11 +36,17 @@ fun AppScaffold(
         topBar = { if (shouldShowTopAppBar) TopBar() },
         bottomBar = { if (!shouldShowNavRail) BottomBar() },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-
-            }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Fab Icon")
-            }
+            FabContainer(
+                onDismissRequest = {},
+                onItemSelected = {
+                    navController.navigate("${Screen.Add.route}/$it") {
+                        popUpTo(
+                            Screen.Home.route
+                        )
+                        launchSingleTop = true
+                    }
+                }
+            )
         },
         floatingActionButtonPosition = if (shouldShowNavRail) FabPosition.End else FabPosition.Center,
         isFloatingActionButtonDocked = true
@@ -96,6 +101,37 @@ fun BottomBar(
     }
 }
 
+@Composable
+fun FabContainer(
+    onDismissRequest: () -> Unit,
+    onItemSelected: (String) -> Unit
+) {
+    var showMenu by remember {
+        mutableStateOf(false)
+    }
+
+    val items = listOf("Expense", "Income", "Asset", "Liability")
+
+    Box {
+        DropdownMenu(
+            expanded = showMenu, onDismissRequest = { showMenu = false },
+        ) {
+            items.forEachIndexed { _, item ->
+                DropdownMenuItem(
+                    onClick = {
+                        onItemSelected(item)
+                        showMenu = false
+                    }) {
+                    Text(text = "Add $item")
+                }
+            }
+        }
+        FloatingActionButton(onClick = { showMenu = true }) {
+            Icon(imageVector = Icons.Default.Add, contentDescription = "Fab Icon")
+        }
+    }
+}
+
 @Preview(
     showBackground = true,
     widthDp = 400,
@@ -137,6 +173,6 @@ fun PreviewFoldApp() {
     AppScaffold(
         navController = rememberNavController(),
         shouldShowNavRail = true,
-         shouldShowTopAppBar = true
+        shouldShowTopAppBar = true
     )
 }

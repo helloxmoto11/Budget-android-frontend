@@ -5,6 +5,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.mypilog.budget.ui.screen.CommonScreen
 import com.mypilog.budget.ui.theme.BudgetTheme
 

@@ -5,10 +5,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mypilog.budget.ui.screen.Screen.Home
+import com.mypilog.budget.ui.screen.Screen.Home.route
+import com.mypilog.budget.ui.screen.add.AddScreen
+import com.mypilog.budget.ui.screen.home.BudgetType
 import com.mypilog.budget.ui.screen.home.HomeScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("Home")
+    object Add : Screen("Add")
 }
 
 @Composable
@@ -27,6 +31,17 @@ fun NavComponent(
                     onError = onError,
                     scrollableTabRow = scrollableTabRow
                 )
+            }
+
+            composable("${Screen.Add.route}/{screen}") { backStackEntry ->
+                val type = when (backStackEntry.arguments?.getString("screen")) {
+                    "Expense" -> BudgetType.Expenses
+                    "Income" -> BudgetType.Income
+                    "Asset" -> BudgetType.Assets
+                    "Liability" -> BudgetType.Liabilities
+                    else -> BudgetType.Expenses
+                }
+                AddScreen(type = type)
             }
 
         }
