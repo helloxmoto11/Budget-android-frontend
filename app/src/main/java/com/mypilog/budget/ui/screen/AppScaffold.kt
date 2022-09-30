@@ -1,6 +1,9 @@
 package com.mypilog.budget.ui.screen
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -8,13 +11,11 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.mypilog.budget.ScreenType
 import com.mypilog.budget.ui.AppNavRail
 import kotlinx.coroutines.launch
 
@@ -23,8 +24,7 @@ private const val TAG = "AppScaffold"
 @Composable
 fun AppScaffold(
     navController: NavHostController,
-    shouldShowNavRail: Boolean,
-    shouldShowTopAppBar: Boolean
+    screenType: ScreenType = ScreenType.PhonePortrait
 ) {
 
     val scaffoldState = rememberScaffoldState()
@@ -33,8 +33,12 @@ fun AppScaffold(
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { if (shouldShowTopAppBar) TopBar() },
-        bottomBar = { if (!shouldShowNavRail) BottomBar() },
+        topBar = {
+            if (screenType is ScreenType.PhonePortrait ||
+                screenType is ScreenType.Foldable
+            ) TopBar()
+        },
+        bottomBar = { if (screenType is ScreenType.PhonePortrait) BottomBar() },
         floatingActionButton = {
             FabContainer(
                 onDismissRequest = {},
@@ -48,13 +52,17 @@ fun AppScaffold(
                 }
             )
         },
-        floatingActionButtonPosition = if (shouldShowNavRail) FabPosition.End else FabPosition.Center,
+        floatingActionButtonPosition = if (screenType is ScreenType.PhonePortrait) {
+            FabPosition.Center
+        } else FabPosition.End,
         isFloatingActionButtonDocked = true
 
 
     ) { paddingValues ->
         Row(modifier = Modifier.padding(paddingValues)) {
-            if (shouldShowNavRail) {
+            if (screenType is ScreenType.Foldable ||
+                screenType is ScreenType.PhoneLandScape
+            ) {
                 AppNavRail(
                     navController = navController,
                     items = listOf("Home", "Stats", "Settings", "Search")
@@ -68,7 +76,7 @@ fun AppScaffold(
                         scaffoldState.snackbarHostState.showSnackbar(it)
                     }
                 },
-                scrollableTabRow = !shouldShowNavRail
+                scrollableTabRow = screenType == ScreenType.PhoneLandScape
             )
         }
 
@@ -86,9 +94,7 @@ fun TopBar() {
 fun BottomBar(
 
 ) {
-    BottomAppBar(
-
-    ) {
+    BottomAppBar {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu Icon")
@@ -142,8 +148,6 @@ fun FabContainer(
 fun PreviewApp() {
     AppScaffold(
         navController = rememberNavController(),
-        shouldShowNavRail = false,
-        shouldShowTopAppBar = true
     )
 }
 
@@ -158,8 +162,7 @@ fun PreviewApp() {
 fun PreviewAppHorizontal() {
     AppScaffold(
         navController = rememberNavController(),
-        shouldShowNavRail = true,
-        shouldShowTopAppBar = false
+        screenType = ScreenType.PhoneLandScape
     )
 }
 
@@ -172,7 +175,6 @@ fun PreviewAppHorizontal() {
 fun PreviewFoldApp() {
     AppScaffold(
         navController = rememberNavController(),
-        shouldShowNavRail = true,
-        shouldShowTopAppBar = true
+        screenType = ScreenType.Foldable
     )
 }

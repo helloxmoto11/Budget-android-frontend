@@ -34,6 +34,20 @@ class MainActivity : ComponentActivity() {
             val width = windowSizeClass.widthSizeClass
             val height = windowSizeClass.heightSizeClass
 
+            val screenType = when (width) {
+                WindowWidthSizeClass.Medium, WindowWidthSizeClass.Expanded -> {
+                    if (height == WindowHeightSizeClass.Compact) {
+                        ScreenType.PhoneLandScape
+                    } else ScreenType.Foldable
+                }
+                WindowWidthSizeClass.Compact -> {
+                    ScreenType.PhonePortrait
+                }
+                else -> {
+                    ScreenType.PhoneLandScape
+                }
+            }
+
             Log.d(TAG, "onCreate: height is $height")
 
             BudgetTheme {
@@ -45,14 +59,12 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     AppScaffold(
                         navController = navController,
-                        shouldShowNavRail = width == WindowWidthSizeClass.Medium || width == WindowWidthSizeClass.Expanded,
-                        shouldShowTopAppBar = width != WindowWidthSizeClass.Expanded
+                        screenType = screenType
                     )
                 }
             }
         }
     }
-
 
 
 }
