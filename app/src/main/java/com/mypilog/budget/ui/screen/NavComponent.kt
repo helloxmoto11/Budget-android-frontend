@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.mypilog.budget.ScreenType
 import com.mypilog.budget.ui.screen.Screen.Home
 import com.mypilog.budget.ui.screen.Screen.Home.route
 import com.mypilog.budget.ui.screen.add.AddScreen
@@ -19,7 +20,8 @@ sealed class Screen(val route: String) {
 fun NavComponent(
     navController: NavHostController,
     onError: (String) -> Unit,
-    scrollableTabRow: Boolean
+    scrollableTabRow: Boolean,
+    screenType: ScreenType
 ) {
 
     NavHost(
@@ -41,7 +43,7 @@ fun NavComponent(
                     "Liability" -> BudgetType.Liabilities
                     else -> BudgetType.Expenses
                 }
-                AddScreen(type = type)
+                AddScreen(type = BudgetType.Expenses, screenType = screenType)
             }
 
         }
