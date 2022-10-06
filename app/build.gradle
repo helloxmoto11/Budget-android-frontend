@@ -50,6 +50,10 @@ android {
 
 dependencies {
 
+    implementation(project(path: ":presentation-common"))
+    implementation(project(path: ":presentation-home"))
+    implementation(project(path: ":presentation-add"))
+
     implementation(project(path: ":domain"))
     implementation(project(path: ":repository"))
     implementation(project(path: ":data-remote"))
@@ -112,6 +116,6 @@ dependencies {
     implementation "androidx.window:window-testing:1.1.0-alpha03"
 
     //compose material3 windowsize
-    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-beta03"
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-rc01"
 
 }

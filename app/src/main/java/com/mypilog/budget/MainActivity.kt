@@ -13,9 +13,8 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import androidx.window.layout.*
-import com.mypilog.budget.ui.screen.AppScaffold
 import com.mypilog.budget.ui.theme.BudgetTheme
+import com.mypilog.presentation_common.ScreenType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -57,7 +56,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
-                    AppScaffold(
+                    com.mypilog.presentation_common.screen.AppScaffold(
                         navController = navController,
                         screenType = screenType
                     )
