@@ -19,7 +19,9 @@ fun BudgetTextField(
     type: BudgetType,
     textFieldValue: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
-    placeholder: String
+    placeholder: String,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    trailingIcon: (@Composable () -> Unit)? = null
 ) {
 
     when (type) {
@@ -41,7 +43,9 @@ fun BudgetTextField(
         value = textFieldValue,
         onValueChange = onValueChange,
         modifier = modifier,
-        placeholder = { Text(text = placeholder) }
+        placeholder = { Text(text = placeholder) },
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon
     )
 }
 
