@@ -5,8 +5,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.mypilog.budget.Screen.Home
+import com.mypilog.presentation_add.AddScreen
 import com.mypilog.presentation_common.BudgetType
 import com.mypilog.presentation_common.ScreenType
+import com.mypilog.presentation_home.HomeScreen
 
 sealed class Screen(val route: String) {
     object Home : Screen("Home")
@@ -26,7 +28,7 @@ fun NavComponent(
         startDestination = Home.route) {
 
             composable(Home.route) {
-                com.mypilog.presentation_home.HomeScreen(
+                HomeScreen(
                     onError = onError,
                     scrollableTabRow = scrollableTabRow
                 )
@@ -40,8 +42,8 @@ fun NavComponent(
                     "Liability" -> BudgetType.Liabilities
                     else -> BudgetType.Expenses
                 }
-                com.mypilog.presentation_add.AddScreen(
-                    type = BudgetType.Expenses,
+                AddScreen(
+                    type = type,
                     screenType = screenType
                 )
             }

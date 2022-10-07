@@ -78,7 +78,7 @@ fun AppScaffold(
                         scaffoldState.snackbarHostState.showSnackbar(it)
                     }
                 },
-                scrollableTabRow = screenType == ScreenType.PhoneLandScape,
+                scrollableTabRow = screenType == ScreenType.PhonePortrait,
                 screenType = screenType
             )
         }

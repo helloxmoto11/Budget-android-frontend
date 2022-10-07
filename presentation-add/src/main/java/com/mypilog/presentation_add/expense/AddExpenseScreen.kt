@@ -1,28 +1,46 @@
-package com.mypilog.presentation_add
+package com.mypilog.presentation_add.expense
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.mypilog.presentation_add.BudgetDateInputTextField
+import com.mypilog.presentation_add.BudgetTextField
 import com.mypilog.presentation_common.BudgetType
 import com.mypilog.presentation_common.ScreenType
 
 @Composable
-fun AddExpenseScreenUi(
-    screenType: ScreenType = ScreenType.PhonePortrait, screenState: AddScreenState
+fun AddExpenseScreen(
+    viewModel: AddExpenseScreenViewModel = hiltViewModel(),
+    screenType: ScreenType
 ) {
+    AddExpenseScreenUi(
+        screenState = viewModel.screenState,
+        onUpdateScreenState = viewModel::onUpdateScreenState,
+        screenType
+    )
+}
+
+@Composable
+fun AddExpenseScreenUi(
+    screenState: AddExpenseScreenState = AddExpenseScreenState(),
+    onUpdateScreenState: (AddExpenseScreenState) -> Unit,
+    screenType: ScreenType
+) {
+
+
+    Text(text = "Add Expense")
 
     val modifier = if (screenType is ScreenType.PhonePortrait) {
         Modifier.fillMaxWidth()
     } else Modifier.width(480.dp)
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,7 +60,7 @@ fun AddExpenseScreenUi(
             type = BudgetType.Expenses,
             textFieldValue = TextFieldValue(),
             onValueChange = {},
-            placeholder = "Name"
+            placeholder = "Expense"
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -75,30 +93,4 @@ fun AddExpenseScreenUi(
         }
 
     }
-}
-
-
-@Preview(
-    name = "Foldable", device = Devices.FOLDABLE, uiMode = UI_MODE_NIGHT_YES
-)
-@Preview(
-    name = "phone-landscape",
-    device = Devices.AUTOMOTIVE_1024p,
-    widthDp = 2000,
-    heightDp = 960,
-    uiMode = UI_MODE_NIGHT_YES
-)
-@Preview(
-    name = "phone-portrait", uiMode = UI_MODE_NIGHT_YES
-)
-annotation class MultiScalePreviews
-
-@MultiScalePreviews
-@Composable
-fun PreviewAddExpenseScreenUi() {
-        Surface {
-            AddExpenseScreenUi(
-                screenType = ScreenType.Foldable, screenState = AddScreenState(BudgetType.Expenses)
-            )
-        }
 }
