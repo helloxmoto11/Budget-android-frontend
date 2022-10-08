@@ -7,7 +7,7 @@ data class Expense(
     val cost: Double,
     val uid: Long,
     val date: String,
-    val timeStamp: String
+    val timeStamp: String? = null
 )
 
 val fakeExpenses = listOf(

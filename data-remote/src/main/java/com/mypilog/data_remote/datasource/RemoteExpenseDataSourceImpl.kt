@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import java.time.LocalDate
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 class RemoteExpenseDataSourceImpl @Inject constructor(
@@ -51,7 +49,7 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
             cost = expenseApiModel.cost,
             uid = expenseApiModel.uid,
             date = expenseApiModel.date,
-            timeStamp = expenseApiModel.timeStamp,
+            timeStamp = expenseApiModel.serverTimeStamp,
         )
 
     private fun Expense.convertToApiModel() : ExpenseApiModel{
@@ -61,8 +59,7 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
             category = category,
             cost = cost,
             uid = uid,
-            date = date,
-            timeStamp = timeStamp,
+            date = date
         )
 
     }
