@@ -25,8 +25,14 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
         throw UseCaseException.ExpenseException(it)
     }
 
-    override suspend fun addExpense(expense: Expense) {
-        expenseService.saveExpense(expense.convertToApiModel())
+    override suspend fun saveExpense(expense: Expense): Expense? {
+       return try {
+           expenseService.saveExpense(expense.convertToApiModel())
+           expense
+       } catch (e: Exception) {
+           e.printStackTrace()
+           null
+       }
     }
 
     private fun convert(expenseApiModel: ExpenseApiModel) =

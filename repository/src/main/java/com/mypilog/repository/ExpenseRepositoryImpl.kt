@@ -19,7 +19,7 @@ class ExpenseRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun saveExpense(expense: Expense): Expense {
-        TODO("Not yet implemented")
+    override fun saveExpense(expense: Expense): Flow<Expense> = flow {
+        remoteExpenseDataSource.saveExpense(expense)
     }
 }

@@ -8,5 +8,5 @@ interface ExpenseRepository {
 
     fun getExpense(id: Long): Flow<Expense>
 
-    fun saveExpense(expense: Expense): Expense
+    fun saveExpense(expense: Expense): Flow<Expense>
 }

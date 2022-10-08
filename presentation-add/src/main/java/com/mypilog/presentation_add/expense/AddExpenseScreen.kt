@@ -36,7 +36,8 @@ fun AddExpenseScreen(
     AddExpenseScreenUi(
         screenState = viewModel.screenState,
         onUpdateScreenState = viewModel::onUpdateScreenState,
-        screenType
+        screenType = screenType,
+        onAddExpense = viewModel::onAddExpense
     )
 }
 
@@ -44,8 +45,9 @@ fun AddExpenseScreen(
 @Composable
 fun AddExpenseScreenUi(
     screenState: AddExpenseScreenState = AddExpenseScreenState(),
+    screenType: ScreenType,
     onUpdateScreenState: (AddExpenseScreenState) -> Unit,
-    screenType: ScreenType
+    onAddExpense: () -> Unit
 ) {
 
     val keyboard = LocalSoftwareKeyboardController.current
@@ -132,7 +134,8 @@ fun AddExpenseScreenUi(
 
 
         Button(
-            onClick = { /*TODO*/ }, modifier = modifier
+            onClick = onAddExpense,
+            modifier = modifier
         ) {
             Text(text = "Add")
         }

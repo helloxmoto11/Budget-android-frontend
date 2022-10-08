@@ -4,12 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.mypilog.domain.usecase.expense.AddExpenseUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class AddExpenseScreenViewModel @Inject constructor(
-
+    private val useCase: AddExpenseUseCase
 ): ViewModel() {
 
     companion object {
@@ -23,6 +24,10 @@ class AddExpenseScreenViewModel @Inject constructor(
 
     fun onUpdateScreenState(state: AddExpenseScreenState) {
         screenState = state
+    }
+
+    fun onAddExpense() {
+
     }
 
 
