@@ -1,5 +1,6 @@
 package com.mypilog.presentation_common.state
 
+import android.util.Log
 import com.mypilog.domain.entity.Result
 import java.net.SocketTimeoutException
 
@@ -9,6 +10,7 @@ abstract class ResultConverter<T: Any, R: Any> {
     fun convert(result: Result<T>): UiState<R> {
         return when (result) {
             is Result.Error -> {
+                result.exception.printStackTrace()
                 val errorMessage = if (result.exception.cause is SocketTimeoutException) {
                     "Connection Timed Out"
                 } else {

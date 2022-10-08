@@ -2,7 +2,6 @@ package com.mypilog.presentation_add
 
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -13,9 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import com.mypilog.presentation_common.BudgetType
 
@@ -70,7 +67,7 @@ fun BudgetDateInputTextField(
     val datePickerDialog = DatePickerDialog(context)
 
     datePickerDialog.setOnDateSetListener { datePicker, year, month, day ->
-        onValueChange(TextFieldValue("$month-$day-$year"))
+        onValueChange(TextFieldValue("${month+1}-$day-$year"))
     }
 
     TextField(

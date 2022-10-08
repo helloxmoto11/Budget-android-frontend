@@ -7,5 +7,5 @@ interface RemoteExpenseDataSource {
 
     fun getExpenses(): Flow<List<Expense>>
 
-    suspend fun saveExpense(expense: Expense): Expense?
+    fun saveExpense(expense: Expense): Flow<Expense>
 }

@@ -5,7 +5,6 @@ import com.mypilog.data_remote.network.expense.ExpenseService
 import com.mypilog.data_remote.network.income.IncomeService
 import com.mypilog.data_remote.network.liability.LiabilityService
 import com.mypilog.data_remote.network.user.UserService
-import com.mypilog.domain.entity.User
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -15,7 +14,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -32,9 +30,10 @@ class NetworkModule {
     @Provides
     fun provideMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
+
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.66:8080/")
+        .baseUrl("http://192.168.61.229:8080/")
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

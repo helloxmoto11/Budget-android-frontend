@@ -1,5 +1,6 @@
 package com.mypilog.data_remote.datasource
 
+import android.util.Log
 import com.mypilog.data_remote.network.expense.ExpenseApiModel
 import com.mypilog.data_remote.network.expense.ExpenseService
 import com.mypilog.domain.entity.Expense
@@ -9,11 +10,17 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 class RemoteExpenseDataSourceImpl @Inject constructor(
     private val expenseService: ExpenseService
 ) : RemoteExpenseDataSource {
+
+    companion object{
+        private const val TAG = "RemoteExpenseDataSource"
+    }
 
     override fun getExpenses(): Flow<List<Expense>> = flow {
         emit(expenseService.getAllExpenses(56))
@@ -25,14 +32,15 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
         throw UseCaseException.ExpenseException(it)
     }
 
-    override suspend fun saveExpense(expense: Expense): Expense? {
-       return try {
-           expenseService.saveExpense(expense.convertToApiModel())
-           expense
-       } catch (e: Exception) {
-           e.printStackTrace()
-           null
-       }
+    override fun saveExpense(expense: Expense): Flow<Expense> = flow {
+        Log.d(TAG, "saveExpense: flow")
+        emit(expenseService.saveExpense(expense.convertToApiModel()))
+    }.map {
+        Log.d(TAG, "saveExpense: map")
+        convert(it)
+    }.catch {
+        it.printStackTrace()
+        throw UseCaseException.ExpenseException(it)
     }
 
     private fun convert(expenseApiModel: ExpenseApiModel) =

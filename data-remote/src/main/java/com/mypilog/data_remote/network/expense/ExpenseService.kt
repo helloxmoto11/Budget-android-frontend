@@ -10,7 +10,7 @@ interface ExpenseService {
     @GET("/expenses/all")
     suspend fun getAllExpenses(@Query("uid") uid: Long): List<ExpenseApiModel>
 
-    @POST
+    @POST("/expenses")
     suspend fun saveExpense(@Body expenseApiModel: ExpenseApiModel): ExpenseApiModel
 
 }
