@@ -66,7 +66,7 @@ fun BudgetDateInputTextField(
 
     val datePickerDialog = DatePickerDialog(context)
 
-    datePickerDialog.setOnDateSetListener { datePicker, year, month, day ->
+    datePickerDialog.setOnDateSetListener { _, year, month, day ->
         onValueChange(TextFieldValue("${month+1}-$day-$year"))
     }
 

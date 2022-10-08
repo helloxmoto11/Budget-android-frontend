@@ -1,6 +1,5 @@
 package com.mypilog.presentation_common.state
 
-import android.util.Log
 import com.mypilog.domain.entity.Result
 import java.net.SocketTimeoutException
 
