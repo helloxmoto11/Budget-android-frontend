@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.mypilog.domain.entity.Expense
 import com.mypilog.domain.usecase.expense.AddExpenseUseCase
 import com.mypilog.presentation_common.state.UiState
+import com.mypilog.presentation_common.util.convertDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -27,7 +28,6 @@ class AddExpenseScreenViewModel @Inject constructor(
         private const val TAG = "AddExpenseScreenViewMod"
     }
 
-
     var screenState by mutableStateOf(AddExpenseScreenState())
     private set
 
@@ -37,18 +37,15 @@ class AddExpenseScreenViewModel @Inject constructor(
     }
 
     fun onAddExpense() {
-        val date = screenState.date.text.split("-")
-        val year = date[2]
-        val month = if (date[0].length < 2) "0${date[0]}" else date[0]
-        val day = if (date[1].length < 2) "0${date[1]}" else date[1]
-        val formattedDate = "$year-$month-$day"
+        // TODO: need to encapsulate this logic. also need a text field validator.
+
 
         val expense = Expense(
             name = screenState.expense.text,
             category = screenState.category.text,
             cost = screenState.cost.text.toDouble(),
             uid = 55L,
-            date = formattedDate,
+            date = convertDate(screenState.date.text),
             timeStamp = LocalDateTime.now().toString()
         )
 
@@ -59,10 +56,13 @@ class AddExpenseScreenViewModel @Inject constructor(
                 }.collect{
                     when (it){
                         is UiState.Error -> {
+                            // TODO: show snackbar
                             Log.d(TAG, "onAddExpense: Error: ${it.errorMessage}")}
                         is UiState.Loading -> {
+                            // TODO: show loading icon.
                             Log.d(TAG, "onAddExpense: loading")}
                         is UiState.Success -> {
+                            // TODO: pop backstack and show success SnackBar.
                             Log.d(TAG, "onAddExpense: Success: ${it.data}")}
                     }
                 }
