@@ -14,7 +14,7 @@ fun <T: Any> CommonScreen(uiState: UiState<T>, onError: (String) -> Unit, onSucc
 
     when (uiState) {
         is UiState.Error -> onError(uiState.errorMessage)
-        UiState.Loading -> Loading()
+        is UiState.Loading -> Loading()
         is UiState.Success -> onSuccess(uiState.data)
     }
 }
