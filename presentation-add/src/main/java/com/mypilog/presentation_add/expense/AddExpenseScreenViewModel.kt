@@ -22,14 +22,14 @@ import javax.inject.Inject
 class AddExpenseScreenViewModel @Inject constructor(
     private val useCase: AddExpenseUseCase,
     private val converter: ExpenseResultConverter
-): ViewModel() {
+) : ViewModel() {
 
     companion object {
         private const val TAG = "AddExpenseScreenViewMod"
     }
 
     var screenState by mutableStateOf(AddExpenseScreenState())
-    private set
+        private set
 
 
     fun onUpdateScreenState(state: AddExpenseScreenState) {
@@ -37,8 +37,7 @@ class AddExpenseScreenViewModel @Inject constructor(
     }
 
     fun onAddExpense() {
-        // TODO: need to encapsulate this logic. also need a text field validator.
-
+        // TODO:  need a text field validator.
 
         val expense = Expense(
             name = screenState.expense.text,
@@ -53,21 +52,22 @@ class AddExpenseScreenViewModel @Inject constructor(
             useCase.invoke(AddExpenseUseCase.Request(expense))
                 .map {
                     converter.convert(it)
-                }.collect{
-                    when (it){
+                }.collect {
+                    when (it) {
                         is UiState.Error -> {
                             // TODO: show snackbar
-                            Log.d(TAG, "onAddExpense: Error: ${it.errorMessage}")}
+                            Log.d(TAG, "onAddExpense: Error: ${it.errorMessage}")
+                        }
                         is UiState.Loading -> {
                             // TODO: show loading icon.
-                            Log.d(TAG, "onAddExpense: loading")}
+                            Log.d(TAG, "onAddExpense: loading")
+                        }
                         is UiState.Success -> {
                             // TODO: pop backstack and show success SnackBar.
-                            Log.d(TAG, "onAddExpense: Success: ${it.data}")}
+                            Log.d(TAG, "onAddExpense: Success: ${it.data}")
+                        }
                     }
                 }
         }
     }
-
-
 }
