@@ -51,10 +51,10 @@ class BudgetResultConverter @Inject constructor() : ResultConverter<GetBudgetUse
 
         Log.d(TAG, "transformBudget: $expenseMap")
         return BudgetModel(
-            expenseMap,
-            incomeMap,
-            assetMap,
-            liabilityMap
+            expenseMap.toSortedMap(reverseOrder()),
+            incomeMap.toSortedMap(reverseOrder()),
+            assetMap.toSortedMap(),
+            liabilityMap.toSortedMap()
         )
     }
 }

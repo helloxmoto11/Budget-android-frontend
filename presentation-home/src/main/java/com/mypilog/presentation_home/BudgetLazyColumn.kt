@@ -36,6 +36,7 @@ fun ExpenseLazyColumn(
 
         }
 
+
         expenses.forEach { (date, expenses) ->
             stickyHeader {
                 Row(
