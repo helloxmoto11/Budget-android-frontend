@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface ExpenseService {
 
-    @GET("/expenses/all")
+    @GET("/expenses")
     suspend fun getAllExpenses(@Query("uid") uid: Long): List<ExpenseApiModel>
 
     @POST("/expenses")

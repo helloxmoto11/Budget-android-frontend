@@ -33,7 +33,7 @@ class NetworkModule {
 
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.61.229:8080/")
+        .baseUrl("http://192.168.1.66:8080/")
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .build()

@@ -21,12 +21,13 @@ class RemoteExpenseDataSourceImpl @Inject constructor(
     }
 
     override fun getExpenses(): Flow<List<Expense>> = flow {
-        emit(expenseService.getAllExpenses(55))
+        emit(expenseService.getAllExpenses(56))
     }.map { expenses ->
         expenses.map { expenseApiModel ->
             convert(expenseApiModel)
         }
     }.catch {
+        it.printStackTrace()
         throw UseCaseException.ExpenseException(it)
     }
 
